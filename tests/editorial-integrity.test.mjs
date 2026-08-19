@@ -36,7 +36,7 @@ const part1PracticeLabelsSha256 = 'e8b38bc642448421048d8b87aa707eeed1d862d68b27b
 const part1AddictionHelpSha256 = 'ba1a2349a246971a78504919e96f7fc502725d7516fdaa8212fbab344efb8464';
 const part2PracticeItemsSha256 = 'de8c5327de299fc7c4384a5197b2e1d2d84681a676d670facc809b86acfd23f4';
 const frozenCanonicalInputs = new Map([
-  ['content/landing.html', '8df1e61f3f0e49669076fc6db50fa2dd44b6d240ca90e8dc7dc579eafaacacc3'],
+  ['content/landing.html', 'ee5583ffc1ba5f128385b63edc52b54604370b7ce85bd3713a112e930dcf1cf7'],
   ['scripts/build-site.ps1', 'c0ab60fba5008be7ddf660a5d56fdc8f8f7298e0a5f41a8bddd560648c5c53e9'],
 ]);
 const generatedPages = [
@@ -98,6 +98,7 @@ const part1HeadingTexts = [
   'Карта замен: вредные копинги и чем их тренировочно заменять',
   'Трудоголизм: побег, за который ещё и платят',
   'Жизнь как в рекламе: произведённый рай и что продают рядом с ним',
+  'Детская и взрослая позиция: что здесь язык, а что механизм',
   'Удобный человек: лучшая версия себя для всех, кроме себя',
   'Практика недели',
 ];
@@ -571,7 +572,7 @@ test('current sources preserve the frozen structural baseline while prose metric
   const authorizedStructuralChanges = ['headings', 'practices', 'finaleHeadings', 'chartReferences', 'headingTexts'];
   assert.deepEqual(compareEditorialMetrics(baseline, current, { allowTextChange: true }), authorizedStructuralChanges);
   assert.equal(current.chartReferences, 4, 'PNG 01 is replaced by accessible text');
-  assert.equal(current.headings, baseline.headings + 41, 'structural work adds exactly the ten reviewed headings net of two retired empty ones');
+  assert.equal(current.headings, baseline.headings + 42, 'structural work adds exactly the ten reviewed headings net of two retired empty ones');
   assert.equal(current.practices, baseline.practices + 7, 'the merged finale chapters and the escapes page add their own practice blocks');
   assert.equal(current.finaleHeadings, baseline.finaleHeadings + 2, 'both merged finale chapters sit inside ФИНАЛ');
   const registeredHeadingChanges = new Map([
