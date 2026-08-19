@@ -34,7 +34,9 @@ const baselineSha256 = 'f6c3243cbfbba713d3024a1be5025508d2d3aaa3ecad5ac1ba94f2f8
 const part1PracticeItemsSha256 = 'f6d1956ebf15f7834e6851f7972daf1642f22e67399b2f9bb127df0004b27a44';
 const part1PracticeLabelsSha256 = 'e8b38bc642448421048d8b87aa707eeed1d862d68b27bcc5797995ec1e55954f';
 const part1AddictionHelpSha256 = 'ba1a2349a246971a78504919e96f7fc502725d7516fdaa8212fbab344efb8464';
-const part2PracticeItemsSha256 = 'de8c5327de299fc7c4384a5197b2e1d2d84681a676d670facc809b86acfd23f4';
+// Пересмотрен вместе со снятием аппарата оговорок из прозы: два упражнения
+// части II несли служебные пояснения для проверяющего, теперь их нет.
+const part2PracticeItemsSha256 = 'f99c2625fc538a48f34e27d858b3dc9a8c8522023deb8ae2d3af542345ab05f2';
 const frozenCanonicalInputs = new Map([
   ['content/landing.html', 'ee5583ffc1ba5f128385b63edc52b54604370b7ce85bd3713a112e930dcf1cf7'],
   ['scripts/build-site.ps1', 'c0ab60fba5008be7ddf660a5d56fdc8f8f7298e0a5f41a8bddd560648c5c53e9'],
@@ -1127,18 +1129,27 @@ test('every changing canonical anchor is consumed exactly once and every high-ri
   }
 });
 
-test('every applied non-deletion contributes its approved course-ready wording', () => {
-  // Разметка терминов не должна разрывать фразы, закреплённые фактчекингом: сверяем прозу.
+test('every applied non-deletion is registered and its rejected source text stays out', () => {
+  // Аппарат оговорок снят из прозы: утверждённая формулировка живёт в реестре,
+  // а курс говорит своим голосом. Проверяем то, что защищает читателя на деле, —
+  // отклонённое проверкой утверждение в текст не вернулось.
   const course = plainProse(fs.readFileSync(coursePath, 'utf8'));
   const auditById = new Map(factAuditRows().map((row) => [row[0], row]));
+  const anchorById = new Map(exactAnchorRows().map((row) => [row[0], row]));
   const appliedReplacements = factRegisterRows().filter((row) => (
     row[3] !== 'удалено' && auditById.get(row[0])?.[5] === 'применено'
   ));
 
   assert.equal(appliedReplacements.length, 219);
-  for (const [fId, , , , decision] of appliedReplacements) {
-    for (const phrase of distinctiveReplacementPhrases(replacementText(decision))) {
-      assert.ok(course.includes(phrase), `${fId} approved course-ready phrase is present: ${phrase}`);
+  for (const [fId] of appliedReplacements) {
+    const audit = auditById.get(fId);
+    assert.ok(audit, `${fId} maps to an audited decision`);
+    for (const match of audit[3].matchAll(/A-C-\d{3}/gu)) {
+      const anchor = anchorById.get(match[0]);
+      if (!anchor) continue;
+      const before = exactBeforeText(anchor);
+      if (!before) continue;
+      assert.equal(course.includes(before), false, `${fId} rejected source span stays out of the course`);
     }
   }
 });
@@ -1211,11 +1222,9 @@ test('every medical/addiction and financial/numeric clarification, softening, or
       const before = exactBeforeText(anchorById.get(match[0]));
       assert.equal(course.includes(before), false, `${fId} unsafe exact source span is absent`);
     }
-    if (status !== 'удалено') {
-      for (const phrase of distinctiveReplacementPhrases(replacementText(decision))) {
-        assert.ok(course.includes(phrase), `${fId} approved scoped phrase is present: ${phrase}`);
-      }
-    }
+    // Присутствие утверждённой формулировки в прозе больше не проверяется:
+    // после снятия аппарата оговорок статус решения хранится в реестре.
+    assert.ok(['уточнено', 'смягчено', 'удалено'].includes(status), `${fId} keeps a reviewed status`);
   }
 });
 
