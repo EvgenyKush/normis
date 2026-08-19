@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --test)",
+      "Bash(node --test tests/*)",
+      "Bash(node scripts/verify-site.mjs *)",
+      "Bash(node scripts/verify-site.mjs)",
+      "Bash(node scripts/sync-quiz.mjs --check)",
+      "Bash(node scripts/editorial-baseline.mjs *)",
+      "Bash(node scripts/editorial-baseline.mjs)",
+      "mcp__Claude_Browser__read_console_messages",
+      "mcp__Claude_Browser__get_page_text",
+      "mcp__Claude_Browser__read_page",
+      "mcp__Claude_Browser__find",
+      "mcp__Claude_Browser__preview_logs"
+    ]
+  }
+}

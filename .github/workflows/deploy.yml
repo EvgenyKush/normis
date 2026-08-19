@@ -3,14 +3,21 @@ name: Проверка и развёртывание
 # Пуш в main прогоняет полную проверку и, если она прошла, разворачивает сайт.
 # Собранные страницы лежат в репозитории, а тесты сверяют их с выводом
 # генератора — поэтому в CI пересборка не нужна, нужна именно сверка.
+#
+# Пул-реквесты прогоняют только проверку, без развёртывания: правку, сделанную
+# с телефона или из облачной сессии, надо увидеть зелёной до слияния.
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
+# Группа своя на каждую ветку: очередь развёртывания main не должна вставать
+# из-за проверок пул-реквестов. Устаревший прогон PR отменяется, main — нет.
 concurrency:
-  group: deploy-main
-  cancel-in-progress: false
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify:
@@ -18,12 +25,44 @@ jobs:
     # Сборка написана на PowerShell и вызывается тестами как `powershell`:
     # это имя существует только на Windows, поэтому среда совпадает с рабочей.
     runs-on: windows-latest
+    permissions:
+      # Пересобранные страницы коммитятся обратно в ветку пул-реквеста.
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Для пул-реквеста берётся сама ветка, а не merge-коммит: в неё же
+          # уйдёт коммит с пересобранным HTML.
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
 
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      # Генератор существует только под Windows, поэтому облачная сессия или
+      # правка с телефона меняют канон, но пересобрать страницы не могут. Тесты
+      # сверяют закоммиченный HTML с выводом генератора и такую правку валят —
+      # пересборка здесь закрывает разрыв. Форки пропускаются: их токен без
+      # права на запись.
+      - name: Пересобрать страницы из канона
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-site.ps1
+          node scripts/sync-quiz.mjs
+
+      - name: Закоммитить пересборку, если она что-то изменила
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Канон и страницы уже согласованы, коммитить нечего."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Пересборка страниц из канона'
+          git push origin HEAD:${{ github.head_ref }}
 
       - name: Тесты
         run: node --test
@@ -37,6 +76,8 @@ jobs:
   deploy:
     name: Развёртывание на Fly
     needs: verify
+    # Пул-реквест только проверяется; разворачивает лишь то, что уже в main.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
