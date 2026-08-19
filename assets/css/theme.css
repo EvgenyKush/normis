@@ -1,0 +1,52 @@
+@import url("variables.css");
+
+*, *::before, *::after { box-sizing: border-box; }
+/* Авторские display побеждают UA-правило [hidden]; без этой строки прогресс-блок
+   и кнопка «продолжить чтение» видны читателю без JS и ничего не делают. */
+[hidden] { display: none !important; }
+html { overflow-x: hidden; color-scheme: light; -webkit-text-size-adjust: 100%; }
+body { margin: 0; overflow-wrap: break-word; background: var(--color-cream-paper); color: var(--color-forest-ink); font-family: var(--font-body); font-size: var(--text-body); line-height: 1.5; }
+img, svg, video, canvas { display: block; height: auto; max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button, [role="button"] { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .6; }
+h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin-block: 0; }
+ul, ol { padding-inline-start: 1.25rem; }
+
+a { color: inherit; text-decoration-color: var(--color-forest-ink); text-decoration-thickness: .1em; text-underline-offset: .16em; }
+a:hover { text-decoration-thickness: .16em; }
+main:focus { outline: none; }
+:focus-visible { outline: 3px solid var(--color-terracotta); outline-offset: 3px; }
+.skip-link { position: fixed; z-index: 10; top: 0; left: var(--spacing-16); transform: translateY(-120%); padding: var(--spacing-8) var(--spacing-16); background: var(--color-forest-ink); color: var(--color-cream-paper); }
+.skip-link:focus { transform: translateY(0); }
+
+.shell { width: min(100% - 2rem, var(--page-max-width)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: var(--text-caption); font-weight: var(--font-weight-medium); letter-spacing: .04em; text-transform: uppercase; }
+.highlight { padding-inline: .08em; background: var(--color-highlighter-yellow); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+/* Трекинг .035em подбирался под Bricolage Grotesque, который в проекте не хостится.
+   На системной гарнитуре он разрежает заголовок, поэтому убран. */
+.display-title { font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5.625rem); font-weight: var(--font-weight-extrabold); line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
+.section-title { font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
+
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; padding: .7rem 1.1rem; border: 1px solid transparent; border-radius: var(--radius-button); font-weight: var(--font-weight-medium); line-height: 1.2; text-align: center; text-decoration: none; box-shadow: var(--shadow-subtle); }
+.button--primary { background: var(--color-forest-ink); color: var(--color-cream-paper); }
+.button--primary:hover { background: #274d00; }
+.button--secondary { border-color: var(--color-forest-ink); background: transparent; color: var(--color-forest-ink); }
+.button--pastel { background: var(--color-sticky-note-teal); color: var(--color-forest-ink); }
+
+.card { padding: var(--spacing-24); border: 1px solid var(--color-forest-ink); border-radius: var(--radius-card); background: var(--color-cream-paper); }
+.card--mint { background: var(--color-sticky-note-mint); }
+.card--blush { background: var(--color-sticky-note-blush); }
+.card--teal { background: var(--color-sticky-note-teal); }
+.prose { max-width: var(--reading-max-width); font-size: var(--text-reading); line-height: 1.6; hyphens: auto; -webkit-hyphens: auto; text-wrap: pretty; }
+.prose > * + * { margin-top: var(--spacing-24); }
+.prose h2, .prose h3 { line-height: 1.2; hyphens: manual; text-wrap: balance; }
+.prose h2, .prose h3, .prose h4 { scroll-margin-block-start: var(--spacing-24); }
+/* Оформление цитат целиком живёт в site.css; здесь остаётся только сброс,
+   иначе жёлтая линейка накладывалась на скруглённую плашку. */
+.prose blockquote { border-left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}

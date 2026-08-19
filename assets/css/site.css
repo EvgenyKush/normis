@@ -1,0 +1,420 @@
+@import url("variables.css");
+
+.site-header { padding-block: var(--spacing-16); }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--spacing-16); padding: var(--spacing-16); border: var(--border-default); border-radius: var(--radius-nav); background: var(--color-cream-paper); box-shadow: 0 1px 2px rgb(255 233 92 / 35%); }
+.site-nav__brand { font-weight: var(--font-weight-bold); text-decoration: none; }
+/* «лучшая» зачёркнуто, «достаточная» надписано сверху. Надстрочнику нужно
+   место над строкой, поэтому у ссылки есть верхний отступ, а у самой надписи
+   нулевая высота — чтобы она не растягивала шапку. */
+.brand-swap { position: relative; display: inline-block; }
+.brand-swap__fix {
+  position: absolute;
+  bottom: calc(100% - .02em);
+  left: 0;
+  font-size: 1em;
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+.brand-swap__old {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-terracotta);
+  text-decoration-thickness: .12em;
+  opacity: .72;
+}
+.site-nav__brand { padding-top: 1.15em; }
+.site-nav__links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-16); }
+
+.landing-hero { display: grid; place-items: center; min-height: min(42rem, 78vh); padding-block: clamp(var(--spacing-48), 10vw, var(--spacing-120)); text-align: center; }
+.landing-hero__inner { display: grid; justify-items: center; gap: var(--spacing-24); max-width: 48rem; }
+.landing-hero__lede { max-width: 38rem; font-size: clamp(1.125rem, 2.5vw, 1.25rem); }
+.landing-section { padding-block: clamp(var(--spacing-48), 8vw, var(--spacing-80)); }
+.landing-section--ruled { border-top: var(--border-default); }
+.landing-section .section-title { max-width: 50rem; margin-top: var(--spacing-16); }
+.landing-lede { max-width: 42rem; margin-top: var(--spacing-16); font-size: var(--text-body-lg); }
+.landing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--spacing-24); }
+.landing-promises { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-8); }
+.chip { padding: var(--spacing-8) var(--spacing-16); border: 1px solid var(--color-forest-ink); border-radius: var(--radius-full); font-size: var(--text-caption); }
+/* Приём главной страницы: перечёркнутое «стань лучшей версией себя».
+   При opacity .62 линия давала 2.35:1 и практически не читалась. */
+.landing-strike { text-decoration: line-through; text-decoration-color: var(--color-terracotta); text-decoration-thickness: .14em; opacity: .78; }
+.landing-dictionary { margin-block: var(--spacing-32) 0; }
+.landing-dictionary > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--spacing-24); padding-block: var(--spacing-16); border-top: var(--border-default); }
+.landing-dictionary > div:last-child { border-bottom: var(--border-default); }
+.landing-dictionary dt { text-decoration: line-through; text-decoration-color: var(--color-terracotta); opacity: .7; }
+.landing-dictionary dd { margin: 0; }
+.program-list { display: grid; gap: var(--spacing-16); margin-top: var(--spacing-32); }
+.program-label { display: flex; align-items: center; gap: var(--spacing-16); margin-top: var(--spacing-16); font-family: var(--font-mono); font-size: var(--text-caption); text-transform: uppercase; }
+.program-label::after { content: ''; flex: 1; border-top: var(--border-default); }
+.program-card { display: grid; gap: var(--spacing-16); }
+.program-card a { justify-self: start; }
+/* Часть-заголовки внутри программы и сноска про письма. */
+.program-list .program-label:not(:first-of-type) { margin-top: var(--spacing-40); }
+.program-list .landing-grid { margin-top: var(--spacing-16); }
+.program-note { margin-top: var(--spacing-32); font-size: var(--text-body-sm); }
+.fit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-32); margin-top: var(--spacing-32); }
+.fit-grid article { min-width: 0; }
+.check-list, .cross-list { display: grid; gap: var(--spacing-8); margin-top: var(--spacing-16); padding: 0; list-style: none; }
+.check-list li, .cross-list li { position: relative; padding: var(--spacing-8) 0 var(--spacing-8) var(--spacing-24); border-bottom: 1px dashed var(--color-pencil-gray); }
+.check-list li::before, .cross-list li::before { position: absolute; left: 0; font-weight: var(--font-weight-bold); }
+.check-list li::before { content: '✓'; }
+.cross-list li::before { content: '×'; color: #a83f14; }
+.terms-grid { margin-top: var(--spacing-32); }
+
+/* Ссылки навигации, оглавления и карточек были высотой 27px при норме 44px. */
+.site-nav__links a,
+.course-toc a,
+.course-toc > summary,
+.program-card a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+.site-nav__links a { padding-inline: var(--spacing-8); margin-inline: calc(var(--spacing-8) * -1); }
+.terms-grid .card { display: grid; align-content: start; gap: var(--spacing-8); }
+.landing-cta .shell { display: grid; justify-items: start; gap: var(--spacing-24); }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--spacing-16); padding-block: var(--spacing-24) var(--spacing-48); border-top: var(--border-default); font-family: var(--font-mono); font-size: var(--text-caption); }
+
+.reader-layout { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: clamp(var(--spacing-24), 5vw, var(--spacing-64)); align-items: start; padding-block: var(--spacing-40); }
+.course-toc { min-width: 0; padding: var(--spacing-16); border: var(--border-default); border-radius: var(--radius-card); background: var(--color-cream-paper); }
+.course-toc summary { cursor: pointer; font-weight: var(--font-weight-semibold); }
+.course-toc ol { display: grid; gap: var(--spacing-12); margin-top: var(--spacing-16); }
+@media (min-width: 60rem) {
+  .course-toc {
+    position: sticky;
+    top: var(--spacing-16);
+    max-height: calc(100vh - var(--spacing-32));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .course-toc > summary { display: none; }
+  .course-toc > ol { margin-top: 0; }
+
+  /* Текст занимает всю колонку до правого края рамки шапки. Строка при этом
+     около 920px, поэтому кегль и интерлиньяж подняты: на такой длине возврат
+     каретки промахивается мимо начала следующей строки. */
+  .prose { max-width: none; font-size: var(--text-body-lg); line-height: 1.7; }
+}
+
+.chapter-header { display: grid; gap: var(--spacing-16); margin-bottom: var(--spacing-40); }
+.chapter-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--spacing-16); margin-top: var(--spacing-64); padding-top: var(--spacing-24); border-top: var(--border-default); }
+.chapter-nav > * { max-width: 100%; }
+.chart-figure { display: grid; gap: var(--spacing-8); max-width: 100%; margin-inline: 0; }
+.chart-figure img { width: 100%; border: var(--border-default); border-radius: var(--radius-card); }
+.chart-figure figcaption { color: var(--color-forest-ink); font-size: var(--text-caption); }
+
+.progress-summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--spacing-16); padding: var(--spacing-16); border-left: .3rem solid var(--color-highlighter-yellow); background: var(--color-sticky-note-mint); }
+.quiz { display: grid; gap: var(--spacing-24); max-width: 48rem; margin-top: var(--spacing-32); margin-inline: auto; padding: clamp(var(--spacing-16), 4vw, var(--spacing-32)); border: 1px solid var(--color-forest-ink); border-radius: var(--radius-card); background: var(--color-cream-paper); }
+.quiz__panel { display: grid; gap: var(--spacing-24); min-width: 0; }
+.quiz__dismiss { justify-self: end; }
+.quiz__heading { line-height: 1.3; }
+.quiz__options { display: grid; min-width: 0; gap: var(--spacing-16); margin: 0; padding: 0; border: 0; }
+.quiz__option { display: flex; align-items: flex-start; gap: var(--spacing-8); min-width: 0; padding: var(--spacing-16); border: var(--border-default); border-radius: var(--radius-card); cursor: pointer; }
+.quiz__option:hover { background: var(--color-whisper-gray); }
+.quiz__option--selected { border-color: var(--color-forest-ink); background: var(--color-highlighter-yellow); }
+.quiz__option input { flex: 0 0 auto; margin-top: .35em; accent-color: var(--color-forest-ink); }
+.quiz__actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--spacing-16); }
+.quiz__result { padding: var(--spacing-16); border-left: .3rem solid var(--color-highlighter-yellow); background: var(--color-sticky-note-mint); }
+.quiz__result:empty { display: none; }
+
+/* Секции с центрированной подачей. Списки «подойдёт / не подойдёт» оставлены
+   с выключкой влево: у их пунктов маркер ✓/× спозиционирован по левому краю,
+   и при центрировании строк он оторвался бы от текста. */
+.landing-section--center > .shell { text-align: center; }
+/* Центрируется только шапка секции: у карточек внутри текст остаётся
+   с выключкой влево, иначе описания в сетке читаются рвано. */
+.landing-section--center-head > .shell > .eyebrow,
+.landing-section--center-head > .shell > .section-title,
+.landing-section--center-head > .shell > .landing-lede { text-align: center; margin-inline: auto; }
+.landing-section--center .section-title,
+.landing-section--center .landing-lede,
+.landing-section--center .fit-grid,
+.landing-section--center .noscript-note,
+.landing-section--center > .shell > p { margin-inline: auto; }
+.landing-section--center .landing-lede,
+.landing-section--center > .shell > p { max-width: 42rem; }
+/* Блок призыва раскладывается гридом с выключкой влево — под центрированием
+   переключаем и его, иначе кнопка остаётся у левого края. */
+.landing-cta.landing-section--center .shell { justify-items: center; }
+/* Словарь: пары «обещание → перевод» держим ближе друг к другу, иначе
+   колонки расходятся по краям контейнера и перестают читаться как пара. */
+.landing-section--center .landing-dictionary { max-width: 52rem; margin-inline: auto; }
+
+/* Блок «что не пережило проверку»: числа крупно, расшифровка под ними. */
+.landing-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--spacing-24); max-width: 56rem; margin: var(--spacing-32) auto 0; }
+.landing-figures > div { display: grid; gap: var(--spacing-8); padding: var(--spacing-16); border: var(--border-default); border-radius: var(--radius-card); background: var(--color-cream-paper); }
+.landing-figures dt { font-family: var(--font-display); font-size: var(--text-heading-sm); font-weight: var(--font-weight-extrabold); line-height: 1; }
+.landing-figures dd { margin: 0; font-size: var(--text-body-sm); }
+.landing-figures__note { max-width: 42rem; margin: var(--spacing-24) auto 0; font-size: var(--text-body-sm); }
+.landing-section--center .fit-grid > article { justify-self: center; max-width: 26rem; width: 100%; }
+.landing-section--center .check-list,
+.landing-section--center .cross-list { text-align: left; }
+.noscript-note { max-width: var(--reading-max-width); margin-top: var(--spacing-16); }
+
+@media (max-width: 59.999rem) {
+  /* Поля контейнера на узком экране не уменьшаем: было 8px, текст упирался в край. */
+  .reader-layout { grid-template-columns: minmax(0, 1fr); }
+  /* На узкой колонке 18px оставляют 34 знака в строке — кегль снижаем, чтобы вернуть меру. */
+  .prose { font-size: var(--text-body-sm); }
+  .course-toc:not([open]) > ol { display: none; }
+  .site-nav { align-items: flex-start; }
+  .chapter-nav { justify-content: flex-start; }
+  .landing-dictionary > div, .fit-grid { grid-template-columns: minmax(0, 1fr); }
+  .quiz__actions { justify-content: flex-start; }
+}
+
+/* Wide tables (the swap map) scroll inside their own region instead of crushing
+   three prose columns into a phone width. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-forest-ink);
+  border-radius: 12px;
+}
+
+.table-scroll table {
+  margin: 0;
+  border: 0;
+  min-width: 34rem;
+}
+
+.table-scroll:focus-visible {
+  outline: 3px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+
+/* ── Ритм читалки ───────────────────────────────────────────────────────────
+   theme.css обнуляет отступы у заголовков, абзацев и списков, а .prose задаёт
+   базовый шаг. Ниже — иерархия этого шага: заголовок отделяется от предыдущего
+   блока сильнее, чем от собственного текста, иначе разделы читаются сплошняком. */
+
+/* Кегли заголовков читалки шли от браузерных дефолтов (h3 = 1.17em ≈ 21px,
+   почти неотличим от текста). Приводим к токенам шкалы. */
+.prose > h2 { font-size: var(--text-subheading); line-height: var(--leading-subheading); }
+.prose > h3 { font-size: var(--text-body-lg); line-height: 1.3; font-weight: var(--font-weight-semibold); }
+.prose > h4 { font-size: var(--text-body); font-weight: var(--font-weight-semibold); }
+.prose > h2 { margin-top: var(--spacing-64); }
+.prose > h3 { margin-top: var(--spacing-48); }
+.prose > h4 { margin-top: var(--spacing-32); }
+.prose > h2 + *,
+.prose > h3 + *,
+.prose > h4 + * { margin-top: var(--spacing-16); }
+
+.prose > h2 {
+  padding-top: var(--spacing-24);
+  border-top: var(--border-default);
+}
+
+.prose > ul,
+.prose > ol { padding-left: 1.25rem; }
+
+.prose li + li { margin-top: var(--spacing-12, 12px); }
+
+.prose > blockquote {
+  margin-block: var(--spacing-32);
+  padding: var(--spacing-16) var(--spacing-24);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--color-highlighter-yellow) 18%, transparent);
+}
+
+.prose > figure { margin-block: var(--spacing-40); }
+.prose > .table-scroll { margin-block: var(--spacing-32); }
+
+/* Абзац-практика: «**Практика:**» и «**Дополнение к практике недели:**» идут перед
+   списком — прижимаем их к своему списку, чтобы блок читался как один. */
+.prose > p:has(+ ul) { margin-bottom: 0; }
+.prose > p + ul { margin-top: var(--spacing-16); }
+
+/* Два заголовка подряд означают пустой раздел — не даём им слипнуться. */
+.prose > h2 + h2,
+.prose > h2 + h3,
+.prose > h3 + h3 { margin-top: var(--spacing-32); }
+
+/* Внутри длинных разделов иерархию несут не заголовки, а абзацы, которые
+   начинаются с жирного зачина («**Механика вреда — в подмене одного слова.**»).
+   Даём им воздух сверху и лёгкий выступ, чтобы глаз цеплялся за структуру. */
+/* В длинных главах до 138 абзацев из 173 начинаются жирным зачином, а h3 нет
+   вовсе: лид-ин — единственная внутренняя структура, и он должен читаться. */
+.prose > p:has(> strong:first-child) { margin-top: var(--spacing-48); }
+
+.prose > p > strong:first-child { color: var(--color-forest-ink); font-weight: var(--font-weight-semibold); letter-spacing: .005em; }
+
+/* Практика: жирный зачин + список читаются как один блок. */
+.prose > p:has(> strong:first-child):has(+ ul) { margin-bottom: 0; }
+
+/* Первый абзац после заголовка прижат к нему, даже если начинается с жирного зачина. */
+.prose > h2 + p:has(> strong:first-child),
+.prose > h3 + p:has(> strong:first-child),
+.prose > h4 + p:has(> strong:first-child) { margin-top: var(--spacing-16); }
+
+/* ── Таблица карты замен ────────────────────────────────────────────────────
+   До этого таблица шла браузерным дефолтом: padding 1px, никаких границ,
+   шапка по центру без заливки, содержимое по вертикали посередине. */
+
+.table-scroll table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+.table-scroll thead th {
+  padding: var(--spacing-16);
+  border-bottom: 1px solid var(--color-forest-ink);
+  background: var(--color-sticky-note-mint);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: .04em;
+  text-align: left;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+.table-scroll tbody td {
+  padding: var(--spacing-16);
+  border-top: var(--border-default);
+  vertical-align: top;
+}
+
+.table-scroll tbody tr:first-child td { border-top: 0; }
+
+/* Первая колонка держит название копинга — она короткая и служит подписью строки. */
+.table-scroll tbody td:first-child {
+  width: 22%;
+  min-width: 9rem;
+  background: color-mix(in srgb, var(--color-sticky-note-mint) 22%, transparent);
+}
+
+.table-scroll tbody td:first-child strong { font-weight: var(--font-weight-bold, 700); }
+
+/* Средняя колонка — функция копинга, второстепенная по отношению к замене. */
+.table-scroll tbody td:nth-child(2) { width: 30%; }
+
+@media (max-width: 47.999rem) {
+  .table-scroll thead th,
+  .table-scroll tbody td { padding: var(--spacing-12, 12px); }
+}
+
+/* ── Экран «Сколько это стоит» ──────────────────────────────────────────────
+   Не попап и не ловушка: обе двери одинакового веса, отказ ничем не наказан. */
+
+.support-page { display: grid; gap: var(--spacing-40); width: min(100% - 2rem, 44rem); margin-inline: auto; padding-block: var(--spacing-64); }
+
+.support-card {
+  display: grid;
+  gap: var(--spacing-16);
+  padding: clamp(var(--spacing-24), 5vw, var(--spacing-40));
+  border: 1px solid var(--color-forest-ink);
+  border-radius: var(--radius-card);
+}
+
+.support-page > * { min-width: 0; }
+.support-card > * { min-width: 0; }
+
+.support-lede { font-size: var(--text-body-lg); }
+
+.support-amount {
+  display: grid;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-16);
+  padding: var(--spacing-24);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--color-sticky-note-mint) 30%, transparent);
+}
+
+.support-amount__label { font-family: var(--font-mono); font-size: var(--text-caption); text-transform: uppercase; letter-spacing: .04em; }
+.support-amount__row { display: flex; align-items: center; gap: var(--spacing-8); }
+
+.support-amount__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: .7rem .9rem;
+  border: 1px solid var(--color-forest-ink);
+  border-radius: var(--radius-button);
+  background: var(--color-cream-paper);
+  color: inherit;
+  font: inherit;
+}
+
+.support-amount__currency { font-size: var(--text-body-lg); }
+.support-amount__hint,
+.support-amount__pending { font-size: var(--text-body-sm); }
+.support-amount__pending { margin-top: var(--spacing-8); }
+
+.support-actions { display: flex; flex-wrap: wrap; gap: var(--spacing-16); margin-top: var(--spacing-8); }
+.support-note { font-size: var(--text-body-sm); }
+.support-fine__title { font-size: var(--text-body-lg); }
+.support-fine .check-list { margin-top: var(--spacing-16); }
+
+/* ── Термин с раскрывающимся объяснением ────────────────────────────────────
+   Нативный popover: без JavaScript, с клавиатурой и Escape. Если браузер
+   popover не знает, объяснение просто остаётся видимым рядом — читатель
+   ничего не теряет. */
+
+.term {
+  display: inline;
+  margin: 0;
+  padding: 0 .1em;
+  border: 0;
+  border-bottom: 2px dotted var(--color-terracotta);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--color-highlighter-yellow) 35%, transparent);
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: help;
+}
+
+.term:hover { background: var(--color-highlighter-yellow); }
+
+.term:focus-visible {
+  outline: 3px solid var(--color-terracotta);
+  outline-offset: 2px;
+}
+
+/* margin: 0 убивал центрирование поповера: UA-стиль центрует его именно
+   через margin: auto, и объяснение уезжало в верхний левый угол экрана. */
+.term-note {
+  max-width: min(32rem, calc(100vw - 2rem));
+  margin: auto;
+  padding: var(--spacing-16) var(--spacing-24);
+  border: 1px solid var(--color-forest-ink);
+  border-radius: var(--radius-card);
+  background: var(--color-cream-paper);
+  color: var(--color-forest-ink);
+  font-size: var(--text-body-sm);
+  line-height: 1.55;
+}
+
+.term-note::backdrop { background: color-mix(in srgb, var(--color-forest-ink) 12%, transparent); }
+
+/* Браузер без popover покажет объяснение как обычную сноску в строке. */
+@supports not selector(:popover-open) {
+  .term-note {
+    display: block;
+    margin-top: var(--spacing-8);
+  }
+}
+
+/* Печать и «сохранить в PDF». Курс читают целиком и уносят в офлайн, поэтому
+   служебные элементы убираем, а таблицу распускаем из горизонтального скролла. */
+@media print {
+  .site-header, .site-footer, .course-toc, .chapter-nav,
+  .progress-summary, .skip-link, .quiz, .noscript-note { display: none; }
+  .reader-layout { display: block; padding: 0; }
+  .shell { width: auto; }
+  .prose { max-width: none; font-size: 11pt; line-height: 1.45; }
+  .prose > h2 { margin-top: var(--spacing-24); padding-top: 0; border-top: 0; break-after: avoid; }
+  .prose > h3, .prose > h4 { break-after: avoid; }
+  .prose > p, .prose > li { orphans: 3; widows: 3; }
+  .prose > figure, .prose > .table-scroll { break-inside: avoid; overflow: visible; }
+  .table-scroll table { min-width: 0; }
+  .card, .quiz, .term, .prose > blockquote { background: transparent; }
+  .term { border-bottom: 0; }
+  /* Объяснения терминов в печати нужны рядом с термином, а не скрыты поповером. */
+  .term-note { position: static; display: block; max-width: none; margin: var(--spacing-8) 0; padding: var(--spacing-8); border-left: 2px solid var(--color-rule); font-size: 9pt; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+}

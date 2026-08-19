@@ -1,0 +1,5 @@
+# Task 6: Offline, responsive, and end-to-end acceptance
+
+Implement only Task 6 from `docs/superpowers/plans/2026-08-17-local-mvp.md` and obey its Global Constraints.
+
+Create `tests/manual-acceptance.md`; extend verifier/tests to reject absolute local filesystem URLs, missing image alt, duplicate IDs, multiple h1, missing reduced-motion CSS, and external scripts. Optional Google Fonts stylesheet is the only external resource permitted and every font stack must end with a system/generic fallback. Run fresh deterministic build, all static/unit tests, JS syntax checks, and the strongest feasible browser acceptance for 320/768/1280, keyboard quiz, progress recovery/storage failure, no-JS/offline/direct-file behavior. If browser policy blocks `file://`, do not bypass it: document the limitation and use an approved local static server solely for rendering plus static proof that direct-file references are relative/classic. Fix failures found. No Git initialization. Write exact evidence/self-review to `.superpowers/sdd/2026-08-17-local-mvp/task-6-report.md`.

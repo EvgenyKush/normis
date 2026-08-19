@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обычная версия себя — курс</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a3300;--cream:#fcfaf5;--pencil:#b6b6b6;--whisper:#f1f1f1;
+    --yellow:#ffe95c;--mint:#d5f5c2;--teal:#a8e5e5;--blush:#f6d0ff;--terra:#cb5521;
+    --font-display:'Bricolage Grotesque',ui-sans-serif,sans-serif;
+    --font-body:'Inter',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Roboto Mono',ui-monospace,monospace;
+    /* совместимость для XP-блока */
+    --bg:var(--cream);--paper:#fff;--ink-soft:var(--ink);--sage:var(--terra);
+    --sage-deep:var(--ink);--line:var(--pencil);--strike:var(--terra);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  body{background:var(--cream);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.5}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .hl{background:linear-gradient(transparent 8%, var(--yellow) 8%, var(--yellow) 92%, transparent 92%);padding:0 .1em}
+
+  header{padding:18px 0;border-bottom:1px solid var(--pencil)}
+  header .wrap{display:flex;justify-content:space-between;align-items:baseline}
+  .logo{font-family:var(--font-body);font-weight:700;font-size:18px;color:var(--ink)}
+  .logo b{background:var(--yellow);padding:1px 5px;border-radius:3px;font-weight:700}
+  .honest-tag{font-family:var(--font-mono);font-size:12px;color:var(--ink)}
+  .honest-tag a{color:var(--ink)!important;text-decoration:underline;text-decoration-color:var(--terra);text-underline-offset:3px}
+
+  .hero{padding:88px 0 72px}
+  .hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,6.4vw,66px);line-height:1.06;letter-spacing:.04em;text-transform:none}
+  .strike{position:relative;color:var(--ink);opacity:.55;white-space:nowrap}
+  .strike::after{content:'';position:absolute;left:-1%;right:-1%;top:52%;height:3px;background:var(--terra);transform:rotate(-1.2deg);border-radius:2px}
+  .fix{background:linear-gradient(transparent 10%, var(--yellow) 10%, var(--yellow) 90%, transparent 90%);padding:0 .08em}
+  .hero p.sub{margin-top:28px;max-width:600px;font-size:20px;line-height:1.38;color:var(--ink)}
+  .hero-note{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px}
+  .chip{font-family:var(--font-body);font-size:14px;font-weight:500;color:var(--ink);background:var(--cream);border:1px solid var(--ink);border-radius:9999px;padding:8px 16px}
+
+  section{padding:64px 0;border-top:1px solid var(--pencil)}
+  .eyebrow{display:inline-block;font-family:var(--font-body);font-weight:500;font-size:13px;color:var(--ink);background:var(--yellow);border-radius:9999px;padding:6px 14px;margin-bottom:16px}
+  h2{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,3.8vw,40px);line-height:1.1;letter-spacing:.04em;margin-bottom:18px}
+  .lead{max-width:620px;color:var(--ink);font-size:18px;line-height:1.5}
+
+  .dict{margin-top:36px;display:grid;gap:0;border-top:1px solid var(--pencil)}
+  .dict-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--pencil);align-items:baseline}
+  .dict-row .was{font-weight:500;color:var(--ink);opacity:.55;font-size:17px;
+    text-decoration:line-through;text-decoration-color:var(--terra);text-decoration-thickness:2px}
+  .dict-row .now{font-size:17px}
+  @media(max-width:560px){.dict-row{grid-template-columns:1fr;gap:6px}}
+
+  .modules{display:grid;gap:16px;margin-top:36px}
+  .part-label{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--ink);margin:24px 0 0;display:flex;align-items:center;gap:12px}
+  .part-label::after{content:'';flex:1;height:1px;background:var(--pencil)}
+  .modules > .part-label:first-child{margin-top:2px}
+  .module{position:relative;overflow:visible;background:var(--cream);border:1px solid var(--ink);border-radius:12px;padding:24px 28px}
+  .module.featured{background:var(--mint);border:1px solid var(--ink)}
+  .module summary{list-style:none;cursor:pointer;display:flex;gap:16px;align-items:baseline}
+  .module summary::-webkit-details-marker{display:none}
+  .m-week{font-family:var(--font-mono);font-size:12px;color:var(--ink);flex-shrink:0}
+  .m-title{font-family:var(--font-body);font-weight:700;font-size:19px;line-height:1.3}
+  .m-body{margin-top:14px;color:var(--ink);max-width:680px;font-size:16px;line-height:1.5}
+  .m-body p+p{margin-top:10px}
+  .m-body .takeaway{margin-top:14px;display:inline-block;background:var(--yellow);border-radius:6px;padding:8px 12px;font-size:15px}
+  .m-body a{color:var(--ink)!important;font-family:var(--font-mono)!important;font-size:13px!important;text-decoration:underline;text-decoration-color:var(--terra);text-underline-offset:3px}
+
+  .fit{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px}
+  @media(max-width:640px){.fit{grid-template-columns:1fr}}
+  .fit h3{font-family:var(--font-mono);font-weight:400;font-size:13px;letter-spacing:.05em;margin-bottom:12px;color:var(--ink)}
+  .fit ul{list-style:none}
+  .fit li{padding:11px 0 11px 24px;position:relative;color:var(--ink);border-bottom:1px dashed var(--pencil);font-size:16px}
+  .fit .yes li::before{content:'✓';position:absolute;left:0;color:var(--ink);font-weight:700}
+  .fit .no li::before{content:'✗';position:absolute;left:0;color:var(--terra);font-weight:700}
+
+  .terms{margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:640px){.terms{grid-template-columns:1fr}}
+  .term{background:var(--cream);border:1px solid var(--ink);border-radius:12px;padding:24px}
+  .term:nth-child(2){background:var(--teal)}
+  .term .t-label{font-family:var(--font-mono);font-size:12px;color:var(--ink);margin-bottom:8px}
+  .term .t-val{font-family:var(--font-body);font-weight:700;font-size:22px}
+  .term .t-note{font-size:14px;line-height:1.5;color:var(--ink);margin-top:6px}
+
+  .cta{padding:80px 0 120px}
+  .cta h2{max-width:760px}
+  .btn{display:inline-block;margin-top:30px;font-family:var(--font-body);font-weight:500;font-size:16px;
+    color:var(--cream);background:var(--ink);padding:16px 32px;border-radius:6px;text-decoration:none;border:none;cursor:pointer;
+    box-shadow:rgba(0,0,0,0.05) 0 1px 2px 0}
+  .btn::before{content:'→ '}
+  .btn:hover{opacity:.92}
+  .btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+  .cta .under{margin-top:12px;font-family:var(--font-body);font-size:14px;color:var(--pencil)}
+
+  footer{border-top:1px solid var(--pencil);padding:24px 0 48px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer p{font-family:var(--font-mono);font-size:12px;color:var(--pencil)}
+
+  /* ---------- тест «автопилот»: единый стиль проекта ---------- */
+  .xp{margin-top:18px;border:1px solid var(--ink);border-radius:12px;background:var(--cream);overflow:hidden}
+  .xp.wizard{max-width:600px;margin:36px auto 0}
+  .xp-title{background:var(--yellow);color:var(--ink);font-family:var(--font-body);font-weight:700;font-size:16px;
+    padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink)}
+  .xp-x{width:26px;height:26px;flex-shrink:0;border-radius:6px;background:var(--cream);border:1px solid var(--ink);
+    color:var(--ink);font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .xp-x:hover{background:var(--blush)}
+  .xp-sub{background:var(--cream);border-bottom:1px dashed var(--pencil);padding:10px 16px;font-size:14px;color:var(--ink);
+    display:flex;justify-content:space-between;align-items:center}
+  .xp-sub b{font-weight:600;font-size:14px}
+  .xp-sub span{font-family:var(--font-mono);font-size:12px}
+  .xp-progress{height:10px;margin:12px 16px 2px;display:flex;gap:4px}
+  .xp-progress i{flex:1;background:var(--whisper);border:1px solid var(--pencil);border-radius:9999px}
+  .xp-progress i.on{background:var(--yellow);border-color:var(--ink)}
+  .xp-body{padding:14px 16px;font-size:16px;color:var(--ink);line-height:1.5}
+  .xp-quest{font-size:16px;margin-bottom:12px}
+  .xp-opt{display:flex;gap:10px;align-items:flex-start;background:var(--cream);border:1px solid var(--ink);border-radius:12px;
+    padding:12px 14px;margin-bottom:10px;cursor:pointer;font-size:15px;line-height:1.5}
+  .xp-opt:hover{background:var(--whisper)}
+  .xp-opt input{margin-top:4px;accent-color:#1a3300;flex-shrink:0}
+  .xp-opt.sel{background:var(--yellow);border-color:var(--ink)}
+  .xp-btns{display:flex;gap:10px;justify-content:flex-end;padding:2px 16px 16px}
+  .xp-btn{font-family:var(--font-body);font-weight:500;font-size:15px;border-radius:6px;padding:10px 18px;cursor:pointer;
+    background:transparent;border:1px solid var(--ink);color:var(--ink)}
+  .xp-btn:last-child{background:var(--ink);color:var(--cream);box-shadow:rgba(0,0,0,.05) 0 1px 2px}
+  .xp-btn:hover{opacity:.9}
+  .xp-btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+  .xp-btn[disabled]{opacity:.45;cursor:default}
+  .xp-report td{padding:4px 12px 4px 0;font-size:15px;vertical-align:top}
+  .xp-report td:first-child{font-family:var(--font-mono);font-size:12px;white-space:nowrap;padding-top:7px}
+
+  @media(max-width:560px){
+    .module{padding:18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">обычная <b>версия себя</b></div>
+    <div class="honest-tag"><a href="курс.html">открыть курс →</a> · 3 части и финал</div>
+  </div>
+</header>
+
+<main>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>
+      <span class="strike">Стань лучшей версией себя</span><br>
+      <span class="fix">Останься собой.</span> Этого достаточно.
+    </h1>
+    <p class="sub">Курс о том, как выйти из бессрочного проекта по самоулучшению — и обнаружить, что жизнь уже началась, причём давно.</p>
+    <div class="hero-note">
+      <span class="chip">дедлайна нет</span>
+      <span class="chip">мест не «осталось 3»</span>
+      <span class="chip">до/после не будет</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">СЛОВАРЬ</div>
+    <h2>Перевод с маркетингового на человеческий</h2>
+    <p class="lead">Каждое обещание индустрии саморазвития мы переводим обратно — в то, что оно значит на самом деле.</p>
+    <div class="dict">
+      <div class="dict-row">
+        <div class="was">«Раскрой свой потенциал»</div>
+        <div class="now">Ты не сейф. Раскрывать нечего — можно просто жить.</div>
+      </div>
+      <div class="dict-row">
+        <div class="was">«Выйди из зоны комфорта»</div>
+        <div class="now">Сначала неплохо бы в неё войти.</div>
+      </div>
+      <div class="dict-row">
+        <div class="was">«Ты можешь больше»</div>
+        <div class="now">Можешь. Вопрос — зачем и какой ценой.</div>
+      </div>
+      <div class="dict-row">
+        <div class="was">«Инвестируй в себя»</div>
+        <div class="now">Ты не актив. У тебя не бывает просадки.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">ПРОГРАММА</div>
+    <h2>Три части и финал. Никакого рывка.</h2>
+    <p class="lead">Часть I вскрывает механизмы, часть II строит практику, часть III разбирается с деньгами, финал возвращает домой. Каждый блок — идея, ценность, практика. Нажми, чтобы раскрыть.</p>
+
+    <div class="modules">
+      <div class="part-label">ЧАСТЬ I</div>
+      <details class="module featured" open>
+        <summary>
+          <span class="m-week">часть I</span>
+          <span class="m-title">Анатомия недостаточности</span>
+        </summary>
+        <div class="m-body">
+          <p>Полное вскрытие механизмов, производящих чувство «со мной что-то не так»: маркетинг с его сдвигающейся планкой, алгоритмы соцсетей, геймификация и гэмблинг, манипуляции стыдом, эмоциональные качели и решения на пиках, религиозные и поколенческие прошивки, родительский голос, эйджизм, долженствования, магическое мышление. И карта побегов от этого чувства — алкоголь, никотин, спорт-достигаторство, трудоголизм, удобность — с честными заменами для каждого.</p>
+          <p class="takeaway">Тревога, у которой найден автор и коммерческий интерес, перестаёт быть правдой о тебе.</p>
+          <p style="margin-top:12px"><a href="курс.html#часть-i-анатомия-недостаточности" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <div class="part-label">ЧАСТЬ II · ПРАКТИКА ДОСТАТОЧНОСТИ</div>
+
+      <details class="module">
+        <summary>
+          <span class="m-week">II · 1</span>
+          <span class="m-title">Инвентаризация без улучшений</span>
+        </summary>
+        <div class="m-body">
+          <p>Учимся описывать себя фактами, а не оценками. Без «пока», «ещё не» и «всего лишь» — языка черновика, который ждёт редактуры.</p>
+          <p class="takeaway">Факт можно рассмотреть. Оценку можно только стыдиться.</p>
+          <p style="margin-top:12px"><a href="курс.html#модуль-2-инвентаризация-без-улучшений-увидеть-себя-не-как-черновик" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary>
+          <span class="m-week">II · 2</span>
+          <span class="m-title">Достаточность вместо оптимизации</span>
+        </summary>
+        <div class="m-body">
+          <p>У «лучше» нет предела, у «достаточно» есть число. Определяем своё «enough» в сне, деньгах, общении и продуктивности — и обнаруживаем, что часть точек уже пройдена.</p>
+          <p class="takeaway">На шкале «лучше» ты проигрываешь бесконечности. На шкале «хватает» у тебя есть достижимая точка.</p>
+          <p style="margin-top:12px"><a href="курс.html#модуль-3-достаточность-вместо-оптимизации-у-хватит-есть-число" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary>
+          <span class="m-week">II · 3</span>
+          <span class="m-title">Право на плато</span>
+        </summary>
+        <div class="m-body">
+          <p>Большая часть жизни — плато, а не рост, и у плато есть собственное имя: владение. Учимся уважать устойчивое «хорошо» на дистанции лет.</p>
+          <p class="takeaway">Стабильное мастерство — более редкое достижение, чем разовый рывок. Оно просто не фотогенично.</p>
+          <p style="margin-top:12px"><a href="курс.html#модуль-4-право-на-плато-мастерство-выглядит-как-застой" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary>
+          <span class="m-week">II · 4</span>
+          <span class="m-title">Обычность как связь</span>
+        </summary>
+        <div class="m-body">
+          <p>Исключительность изолирует, обычность соединяет. Дружба живёт на общей территории слабостей: «и у меня так». Разбираем цену фасада, который любят вместо тебя.</p>
+          <p class="takeaway">Достижениями можно впечатлить. Соединиться можно только обычностью.</p>
+          <p style="margin-top:12px"><a href="курс.html#модуль-5-обычность-как-связь-исключительность-изолирует" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <div class="part-label">ЧАСТЬ III · ЭКОНОМИКА ОБЫЧНОЙ ЖИЗНИ</div>
+      <details class="module">
+        <summary>
+          <span class="m-week">часть III</span>
+          <span class="m-title">Экономика недостаточности: почему «не тянешь» — не про тебя</span>
+        </summary>
+        <div class="m-body">
+          <p>Почему квартира стала недосягаемой (спойлер: дело не в кофе навынос), как устроена кредитная кабала — минимальный платёж, дробление цены «всего 990 в месяц», обезболивание оплаты — и на какие механики психики всё это рассчитано. План выхода: опись долга, лавина или снежный ком, подушка и жизнь по своим числам, а не по чужим витринам.</p>
+          <p class="takeaway">Человеку, которому достаточно, очень трудно продать долг.</p>
+          <p style="margin-top:12px"><a href="курс.html#модуль-6-экономика-недостаточности-почему-не-тянешь-это-не-про-тебя" >читать в курсе →</a></p>
+        </div>
+      </details>
+
+      <div class="part-label">ФИНАЛ</div>
+      <details class="module">
+        <summary>
+          <span class="m-week">финал</span>
+          <span class="m-title">Версия Pure — без апдейтов</span>
+        </summary>
+        <div class="m-body">
+          <p>У проекта есть версия 2.0, у человека версия одна — Pure, и ты её уже встречал: в детстве, когда бежал по двору не для кардио и дружил не для нетворкинга. Вспоминаем беспечность как утраченный навык, а не безответственность, и собираем «Архив Pure» — доказательство того, что ценной память делает обычную жизнь, а не достижения.</p>
+          <p class="takeaway">Версия Pure уже установлена — давно, ещё во дворе. Всё остальное — надстройки поверх.</p>
+          <p style="margin-top:12px"><a href="курс.html#финал" >читать в курсе →</a></p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">ЧЕСТНО ПРО СОВМЕСТИМОСТЬ</div>
+    <h2>Кому курс подойдёт, а кому — нет</h2>
+    <div class="fit">
+      <div class="yes">
+        <h3>ПОДОЙДЁТ, ЕСЛИ</h3>
+        <ul>
+          <li>Устал быть собственным стартапом</li>
+          <li>После каждого «прорыва» планка просто поднимается</li>
+          <li>Чужие витрины стали источником тревоги</li>
+          <li>Хочется отдыхать без чувства вины</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>НЕ ПОДОЙДЁТ, ЕСЛИ</h3>
+        <ul>
+          <li>Ждёшь «10 шагов к новой жизни»</li>
+          <li>Нужна накачка мотивацией</li>
+          <li>Хочешь фото «до и после»</li>
+          <li>Веришь, что покой можно оптимизировать</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">УСЛОВИЯ</div>
+    <h2>Без мелкого шрифта</h2>
+    <div class="terms">
+      <div class="term">
+        <div class="t-label">формат</div>
+        <div class="t-val">6 писем + практики</div>
+        <div class="t-note">Одно письмо в неделю. Читается за 15 минут.</div>
+      </div>
+      <div class="term">
+        <div class="t-label">темп</div>
+        <div class="t-val">свой</div>
+        <div class="t-note">Отстать невозможно: письма никуда не денутся.</div>
+      </div>
+      <div class="term">
+        <div class="t-label">гарантия результата</div>
+        <div class="t-val">нет</div>
+        <div class="t-note">И ни у кого нет. Мы просто первые, кто это написал.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="autopilot-test">
+  <div class="wrap">
+    <div class="eyebrow">САМОДИАГНОСТИКА</div>
+    <h2>Тест: <span class="hl">автопилот</span> или критическое мышление</h2>
+    <p class="lead">Восемь житейских ситуаций и один финальный системный вопрос. Отвечай как есть — вердикт не оценка, а карта, где припаркован твой автопилот.</p>
+
+    <div class="xp wizard" role="group" aria-label="Мастер проверки автопилота">
+      <div class="xp-title"><span id="wzTitle">Мастер проверки автопилота</span><span class="xp-x" id="wzClose" role="button" tabindex="0" aria-label="Закрыть">✕</span></div>
+      <div class="xp-sub"><b id="wzStepName">Подготовка к проверке</b><span id="wzStepNum">шаг 0 из 9</span></div>
+      <div class="xp-progress" id="wzProgress" aria-hidden="true"></div>
+      <div class="xp-body" id="wzBody"></div>
+      <div class="xp-btns">
+        <button class="xp-btn" id="wzBack" disabled>&lt; Назад</button>
+        <button class="xp-btn" id="wzNext">Далее &gt;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2><span class="strike">Обновись до версии 2.0</span><br><span class="fix">Ты уже версия Pure</span></h2>
+    <a class="btn" href="курс.html">Открыть курс — спокойно, без спешки</a>
+    <p class="under">кнопка не исчезнет через 15:00 минут. она вообще никуда не денется.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© обычная версия себя</p>
+    <p>сделано без нейромаркетинга. почти.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var Q=[
+    {name:'Лента', text:'Лента показала ровесника: дом, машина, подпись «наконец-то сбылось».',
+     a:'Укол в груди, «а я что в жизни сделал» — и полчаса доскролливания с ощущением собственной просроченности.',
+     c:'«Я вижу лучшие 5% чьей-то жизни в один удачный день. Что за кадром? И я хотел именно дом — или хочу перестать чувствовать укол?»'},
+    {name:'Реклама курса', text:'Реклама: «Освой профессию за 3 месяца и выйди на доход мечты».',
+     a:'«Вот оно. С понедельника новая жизнь» — покупка на эмоции, курс присоединяется к трём предыдущим на полке.',
+     c:'«Кто говорит и что продаёт? Хотел ли я эту профессию вчера, до рекламы? Почему истории трёх человек, а не статистика трёх тысяч?»'},
+    {name:'Рассрочка', text:'«Всего 990 в месяц, первый платёж через 30 дней».',
+     a:'«990 — это же ничего». Оформлено за 40 секунд, будущий я разберётся — он вообще молодец.',
+     c:'«990 × 24 = 23 760. Купил бы я это сразу, наличными из конверта? Если нет — почему нарезанное ломтиками стало съедобным?»'},
+    {name:'Премия', text:'Внезапная премия.',
+     a:'«Я заслужил» — к вечеру премия конвертирована в вещи, о которых утром я не знал, что они мне нужны.',
+     c:'«Появился выбор, а не обязанность потратить. Что говорит мой список „достаточно“? Подушка цела? Радость — тоже легальная статья, но выбранная».'},
+    {name:'Друг', text:'Друг признаётся: не справляется, всё запустил.',
+     a:'«Да брось, всё у тебя нормально! Вот попробуй вставать в шесть…» Друг кивает и больше тему не поднимает.',
+     c:'«Он не просил решение — он рискнул снять фасад. Моя задача — подтвердить, что так можно: „и у меня так бывает“».'},
+    {name:'Карьера', text:'Третий год без повышения. Лента полна чужих карьерных скачков.',
+     a:'«Я застрял. Все растут, один я стою». Вечер самокопания, ночь вакансий, к утру — только тревога.',
+     c:'«Стою — или владею? Хочу расти, потому что хочу, — или потому что стоять стыдно? Это разные мотивы и разные решения».'},
+    {name:'Свободный вечер', text:'Вечер внезапно свободен. Никаких дел.',
+     a:'«Нельзя терять время» — подкаст на ×1,5 про продуктивность поверх мытья посуды. И почему-то усталость.',
+     c:'«Кому я должен этот „полезный“ вечер? Час без „зачем“ — по расписанию версии Pure».'},
+    {name:'Таймер', text:'«Успей до конца дня! Осталось 2 места».',
+     a:'Сердцебиение, «потом такого не будет», покупка. Таймер назавтра, как ни странно, снова там же.',
+     c:'«Срочность — инструмент отключения этого самого вопроса. Правило 72 часов: дожившее желание покупаю спокойно».'}
+  ];
+  var step=0, answers=[], finalChoice=null;
+  var body=document.getElementById('wzBody'), back=document.getElementById('wzBack'),
+      next=document.getElementById('wzNext'), num=document.getElementById('wzStepNum'),
+      nm=document.getElementById('wzStepName'), prog=document.getElementById('wzProgress'),
+      title=document.getElementById('wzTitle');
+  for(var i=0;i<9;i++){var seg=document.createElement('i');prog.appendChild(seg);}
+  // фиксированный порядок вариантов на шаг (перемешан один раз, чтобы «критическое» не стояло всегда вторым)
+  var order=Q.map(function(_,i){return i%2===0?['a','c']:['c','a'];});
+
+  function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  function renderProgress(){
+    var segs=prog.children;
+    for(var i=0;i<segs.length;i++)segs[i].className=i<step?'on':'';
+  }
+  function renderIntro(){
+    nm.textContent='Подготовка к проверке'; num.textContent='шаг 0 из 9';
+    body.innerHTML='<p class="xp-quest">Мастер проверит реакции вашей системы в восьми житейских ситуациях и задаст один финальный вопрос.<br><br>Отвечайте как есть: неправильных ответов нет, есть неотрефлексированные.</p>';
+    back.disabled=true; next.disabled=false; next.textContent='Начать проверку >';
+  }
+  function renderQ(i){
+    var q=Q[i], o=order[i];
+    nm.textContent='Ситуация: '+q.name; num.textContent='шаг '+(i+1)+' из 9';
+    var opts=o.map(function(k){
+      var t=k==='a'?q.a:q.c;
+      var checked=answers[i]===k?' checked':'';
+      var sel=answers[i]===k?' sel':'';
+      return '<label class="xp-opt'+sel+'"><input type="radio" name="q'+i+'" value="'+k+'"'+checked+'>'+esc(t)+'</label>';
+    }).join('');
+    body.innerHTML='<p class="xp-quest">'+esc(q.text)+'<br><span style="color:#555;font-size:12.5px">Как обычно реагирует ваша система?</span></p>'+opts;
+    back.disabled=false; next.textContent='Далее >'; next.disabled=(answers[i]===undefined);
+    body.querySelectorAll('input').forEach(function(inp){
+      inp.addEventListener('change',function(){
+        answers[i]=inp.value; next.disabled=false;
+        body.querySelectorAll('.xp-opt').forEach(function(l){l.classList.toggle('sel',l.querySelector('input').checked);});
+      });
+    });
+  }
+  function renderFinal(){
+    nm.textContent='Центр обновления себя'; num.textContent='шаг 9 из 9';
+    var opts=[
+      {v:'up', t:'Установить обновление 2.0 (рекомендуется индустрией)'},
+      {v:'pure', t:'У меня всё установлено'}
+    ].map(function(o){
+      var checked=finalChoice===o.v?' checked':''; var sel=finalChoice===o.v?' sel':'';
+      return '<label class="xp-opt'+sel+'"><input type="radio" name="fin" value="'+o.v+'"'+checked+'>'+o.t+'</label>';
+    }).join('');
+    body.innerHTML='<p class="xp-quest">Доступно обновление до версии 2.0 «Лучшая версия себя».<br>Установить сейчас?</p>'+opts;
+    back.disabled=false; next.textContent='Завершить'; next.disabled=(finalChoice===null);
+    body.querySelectorAll('input').forEach(function(inp){
+      inp.addEventListener('change',function(){
+        finalChoice=inp.value; next.disabled=false;
+        body.querySelectorAll('.xp-opt').forEach(function(l){l.classList.toggle('sel',l.querySelector('input').checked);});
+      });
+    });
+  }
+  function verdict(n){
+    if(n<=2)return'Либо вы уже прошли курс, либо слегка себе льстите — модуль 2 (про честную выборку) передаёт привет.';
+    if(n<=5)return'Штатная работа психики: автопилот и должен вести большую часть маршрута. Руль стоит забирать на поворотах с деньгами и самооценкой.';
+    return'Вы — идеальный клиент индустрии недостаточности. Хорошая новость: теперь вы знаете её приёмы поимённо, а названный приём работает вдвое хуже.';
+  }
+  function renderReport(){
+    var n=answers.filter(function(a){return a==='a';}).length;
+    nm.textContent='Отчёт системы'; num.textContent='проверка завершена';
+    renderProgressFull();
+    var fin=finalChoice==='pure'
+      ?'Обновление отклонено. У вас установлена версия Pure — обновление не требуется.'
+      :'Запрос на обновление зарегистрирован. Система сообщает: версия 2.0 не существует, планка будет перенесена автоматически. Рекомендован модуль 1.';
+    body.innerHTML='<table class="xp-report">'
+      +'<tr><td>Обнаружено автопилотов:</td><td><b>'+n+' из 8</b></td></tr>'
+      +'<tr><td>Диагноз:</td><td>'+verdict(n)+'</td></tr>'
+      +'<tr><td>Финальный выбор:</td><td>'+fin+'</td></tr>'
+      +'</table><p class="xp-quest" style="margin-top:12px;color:#555;font-size:12.5px">Цель — не вечная критическая проверка (это тот же перфекционизм в профиль), а один вставленный вопрос там, где кто-то очень хочет, чтобы вы не успели его задать.</p>';
+    back.disabled=false; next.textContent='Пройти заново'; next.disabled=false;
+  }
+  function renderProgressFull(){for(var i=0;i<prog.children.length;i++)prog.children[i].className='on';}
+  function render(){
+    renderProgress();
+    if(step===0)renderIntro();
+    else if(step<=8)renderQ(step-1);
+    else if(step===9)renderFinal();
+    else renderReport();
+  }
+  next.addEventListener('click',function(){
+    if(step===10){step=0;answers=[];finalChoice=null;render();return;}
+    step++; render();
+    if(step===10)renderReport();
+  });
+  back.addEventListener('click',function(){ if(step>0){step--; render();} });
+  var closed=false;
+  function closeMsg(){
+    if(closed)return; closed=true;
+    var prev=body.innerHTML;
+    body.innerHTML='<p class="xp-quest">Окно нельзя закрыть, но его можно перестать бояться.</p>';
+    setTimeout(function(){body.innerHTML=prev; closed=false; render();},1800);
+  }
+  document.getElementById('wzClose').addEventListener('click',closeMsg);
+  document.getElementById('wzClose').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')closeMsg();});
+  render();
+})();
+</script>
+</body>
+</html>

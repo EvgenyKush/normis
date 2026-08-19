@@ -1,0 +1,7 @@
+# Task 3: Correct and literary-edit Parts II–III, tests, and finale while inventorying claims
+
+Read the approved editorial spec and implement only Task 3 from `docs/superpowers/plans/2026-08-18-editorial-review.md`; Global Constraints are binding.
+
+Edit only `content/course.md` from `# ЧАСТЬ II` through EOF. Read the entire range before editing. Perform comprehensive Russian correction and literary editing while preserving headings/order, modules 2–6, every practice body, five chart references, eight quiz situations and score bands, finale, examples, structural-circumstance/personal-agency distinction, and dry voice. Record all substantive meaning/certainty/example/recommendation changes. Create complete `claims-parts-2-3.md` with unique P2 IDs, resolvable locations/quotations, risk/domain/search terms; causal, diagnostic, quantitative, treatment, safety, and universal claims are high. Add strong preservation/inventory tests while retaining Task 1–2 contracts. Part I must remain byte-identical to its post-Task-2 state. Generated HTML, landing, quiz JS, build interface remain untouched and tests must not mutate workspace outputs. Do not research/adjudicate claims, initialize Git, or spawn subagents.
+
+Write `.superpowers/sdd/2026-08-18-editorial-review/task-3-report.md` with boundaries, hashes, edit/claim counts, exact tests/output, and concerns. Return only status, one-line test summary, and concerns.

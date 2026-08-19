@@ -1,0 +1,13 @@
+# В образ идёт только собранный сайт.
+content/
+scripts/
+tests/
+docs/
+design/
+site/
+.superpowers/
+node_modules/
+*.md
+!README.md
+.git/
+.claude/
